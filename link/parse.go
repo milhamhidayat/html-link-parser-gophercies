@@ -48,12 +48,15 @@ func text(n *html.Node) string {
 	if n.Type == html.TextNode {
 		return n.Data
 	}
+	if n.Type == html.CommentNode {
+		return n.Data
+	}
 	if n.Type != html.ElementNode {
 		return ""
 	}
 	var ret string
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		ret += text(c) + " "
+		ret += text(c)
 	}
 	return strings.Join(strings.Fields(ret), " ")
 }
